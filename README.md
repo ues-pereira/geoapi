@@ -1,24 +1,42 @@
-# README
+# Geolocation API (In Development)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a **Geolocation API** in development, designed to provide services for address lookups and their respective geographical coordinates. The primary goal of this project is to **explore and learn more about hexagonal architecture**, also known as **Ports** and **Adapters**.
 
-Things you may want to cover:
+## Technologies used
+- **Ruby 3.2.2**
+- **Rails 8.0.1**
+- **PostgreSQL 16**
 
-* Ruby version
+- **Geocoder:** For geolocation lookup services.
 
-* System dependencies
+- **Hexagonal Architecture:** Focused on separating domain logic from external infrastructure (databases, geolocation services, etc.).
 
-* Configuration
+## Objectives
+- Apply **hexagonal architecture** principles, using **ports** and **adapters** to decouple bussines logic from external dependencies.
 
-* Database creation
+- Learn how to integrate **geolocation** effectively, with a focus on scalability and maintainability.
 
-* Database initialization
+## Setup
+To get started with this project, you can use Docker to set up the application. Follow these steps:
 
-* How to run the test suite
+1. **Build and start the application using Docker Compose:**
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+docker compose run --rm app bash
 
-* Deployment instructions
+```
 
-* ...
+## Running Tests
+To run tests for the application:
+
+1. Run the setup script to prepare the environment:
+
+```
+bin/setup
+```
+
+2. Run the tests with RSpec:
+
+```
+bundle exec rspec
+```
