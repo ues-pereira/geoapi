@@ -1,0 +1,38 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://nominatim.openstreetmap.org/search?accept-language=en&addressdetails=1&format=json&q=Avenida%20Paulista,7,S%C3%A3o%20Paulo,S%C3%A3o%20Paulo,Brazil
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 25 Feb 2025 20:37:12 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '1037'
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=20
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        W3sicGxhY2VfaWQiOjg1MDE2NjAsImxpY2VuY2UiOiJEYXRhIMKpIE9wZW5TdHJlZXRNYXAgY29udHJpYnV0b3JzLCBPRGJMIDEuMC4gaHR0cDovL29zbS5vcmcvY29weXJpZ2h0Iiwib3NtX3R5cGUiOiJub2RlIiwib3NtX2lkIjo0OTU3MDEzMzA3LCJsYXQiOiItMjMuNTcxMjM5MSIsImxvbiI6Ii00Ni42NDQ2ODEyIiwiY2xhc3MiOiJwbGFjZSIsInR5cGUiOiJob3VzZSIsInBsYWNlX3JhbmsiOjMwLCJpbXBvcnRhbmNlIjo3Ljg2MTgyOTU1NjcyMDg2M2UtMDUsImFkZHJlc3N0eXBlIjoicGxhY2UiLCJuYW1lIjoiIiwiZGlzcGxheV9uYW1lIjoiNywgQXZlbmlkYSBQYXVsaXN0YSwgUGFyYcOtc28sIFZpbGEgTWFyaWFuYSwgU8OjbyBQYXVsbywgUmVnacOjbyBJbWVkaWF0YSBkZSBTw6NvIFBhdWxvLCBSZWdpw6NvIE1ldHJvcG9saXRhbmEgZGUgU8OjbyBQYXVsbywgUmVnacOjbyBHZW9ncsOhZmljYSBJbnRlcm1lZGnDoXJpYSBkZSBTw6NvIFBhdWxvLCBTw6NvIFBhdWxvLCBTb3V0aGVhc3QgUmVnaW9uLCAwMTMxMS0wMDAsIEJyYXppbCIsImFkZHJlc3MiOnsiaG91c2VfbnVtYmVyIjoiNyIsInJvYWQiOiJBdmVuaWRhIFBhdWxpc3RhIiwic3VidXJiIjoiUGFyYcOtc28iLCJjaXR5X2Rpc3RyaWN0IjoiVmlsYSBNYXJpYW5hIiwiY2l0eSI6IlPDo28gUGF1bG8iLCJtdW5pY2lwYWxpdHkiOiJSZWdpw6NvIEltZWRpYXRhIGRlIFPDo28gUGF1bG8iLCJjb3VudHkiOiJSZWdpw6NvIE1ldHJvcG9saXRhbmEgZGUgU8OjbyBQYXVsbyIsInN0YXRlX2Rpc3RyaWN0IjoiUmVnacOjbyBHZW9ncsOhZmljYSBJbnRlcm1lZGnDoXJpYSBkZSBTw6NvIFBhdWxvIiwic3RhdGUiOiJTw6NvIFBhdWxvIiwiSVNPMzE2Ni0yLWx2bDQiOiJCUi1TUCIsInJlZ2lvbiI6IlNvdXRoZWFzdCBSZWdpb24iLCJwb3N0Y29kZSI6IjAxMzExLTAwMCIsImNvdW50cnkiOiJCcmF6aWwiLCJjb3VudHJ5X2NvZGUiOiJiciJ9LCJib3VuZGluZ2JveCI6WyItMjMuNTcxMjg5MSIsIi0yMy41NzExODkxIiwiLTQ2LjY0NDczMTIiLCItNDYuNjQ0NjMxMiJdfV0=
+  recorded_at: Tue, 25 Feb 2025 20:37:12 GMT
+recorded_with: VCR 6.3.1
