@@ -28,6 +28,7 @@ gem "kamal", require: false
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
+gem "geocoder", "~> 1.3", ">= 1.3.7"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
@@ -41,6 +42,12 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem 'rspec-rails', '~> 7.0.0'
+  gem "pry-byebug", "~> 3.10", ">= 3.10.1"
 end
 
-
+group :test do
+  gem "shoulda-matchers", "~> 6.4"
+  gem 'vcr'
+  gem 'webmock'
+end
