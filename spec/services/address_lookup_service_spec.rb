@@ -19,8 +19,9 @@ RSpec.describe AddressLookupService, type: :service do
     it 'returns an unsuccessful response' do
       response = service.execute
 
-      expect(response.success).to eq false
-      expect(response.location).to be_empty
+      expect(response.success?).to eq false
+      expect(response.data).to be_empty
+      expect(response.error).to eq 'Missing required parameters: city'
     end
   end
 
@@ -45,8 +46,9 @@ RSpec.describe AddressLookupService, type: :service do
       it 'returns a successful response with the stored coordinates' do
         response = service.execute
 
-        expect(response.success).to eq true
-        expect(response.location).to have_attributes(coordinates)
+        expect(response.success?).to eq true
+        expect(response.data).to have_attributes(coordinates)
+        expect(response.error).to be_nil
       end
 
       it 'does not call the geolocation service' do
@@ -65,7 +67,9 @@ RSpec.describe AddressLookupService, type: :service do
         VCR.use_cassette("geocoder_response") do
           response = service.execute
 
-          expect(response.location).to have_attributes(params)
+          expect(response.success?).to eq true
+          expect(response.data).to have_attributes(params)
+          expect(response.error).to be_nil
         end
       end
     end

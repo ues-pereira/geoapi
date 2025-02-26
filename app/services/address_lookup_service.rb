@@ -4,7 +4,7 @@ class AddressLookupService
   class MissingParams < StandardError; end
   class GeoLocationNotFound < StandardError; end
 
-  attr_reader :repository, :geolocation_service, :street, :city, :number, :state, :country
+  attr_reader :repository, :geolocation_service, :street, :city, :number, :state, :country, :result
 
   def initialize(repository:, geolocation_service:, street:, city:, number:, state:, country:)
     @repository = repository
@@ -20,10 +20,8 @@ class AddressLookupService
     validate_params
 
     location = repository.find_by_address(**address.compact)
-    return response(success: true, location: location) if location.present?
+    return Result.success(location) if location.present?
 
-    # geolocation = fetch_geolocation
-    binding.pry
     location = repository.create!(
       street: fetch_geolocation.street,
       number: fetch_geolocation.house_number.to_i,
@@ -34,11 +32,11 @@ class AddressLookupService
       longitude: fetch_geolocation.longitude
     )
 
-    response(success: true, location: location)
-  rescue MissingParams
-    response(success: false, location: [])
+    Result.success(location)
+  rescue MissingParams => e
+    Result.failure(e.message)
   rescue GeoLocationNotFound
-    response(success: false, location: [])
+    Result.failure([])
   end
 
   private
@@ -48,9 +46,9 @@ class AddressLookupService
   end
 
   def validate_params
-    return if address.except(:number).values.all?(&:present?)
+    missing_keys = address.except(:number).select { |_, value| value.blank? }
 
-    raise MissingParams
+    raise MissingParams, "Missing required parameters: #{missing_keys.keys.join(', ')}" if missing_keys.any?
   end
 
   def fetch_geolocation
