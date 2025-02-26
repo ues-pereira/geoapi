@@ -1,6 +1,6 @@
 #  frozen_string_literal: true
 
-class FindLocationByAddressService
+class AddressLookupService
   class MissingParams < StandardError; end
   class GeoLocationNotFound < StandardError; end
 

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
-#TODO
-RSpec.describe FindLocationByAddressService, type: :service do
+RSpec.describe AddressLookupService, type: :service do
   let(:repository) { Repositories::ActiveRecordLocationRepository }
   let(:geolocation_service) { Services::GeocoderService }
   let(:service) { described_class.new(**params.merge(repository: repository, geolocation_service: geolocation_service)) }
