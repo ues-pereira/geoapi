@@ -22,15 +22,16 @@ class AddressLookupService
     location = repository.find_by_address(**address.compact)
     return response(success: true, location: location) if location.present?
 
-    geolocation = fetch_geolocation
+    # geolocation = fetch_geolocation
+    binding.pry
     location = repository.create!(
-      street: geolocation.street,
-      number: geolocation.house_number.to_i,
-      city: geolocation.city,
-      state: geolocation.state,
-      country: geolocation.country,
-      latitude: geolocation.latitude,
-      longitude: geolocation.longitude
+      street: fetch_geolocation.street,
+      number: fetch_geolocation.house_number.to_i,
+      city: fetch_geolocation.city,
+      state: fetch_geolocation.state,
+      country: fetch_geolocation.country,
+      latitude: fetch_geolocation.latitude,
+      longitude: fetch_geolocation.longitude
     )
 
     response(success: true, location: location)
@@ -53,13 +54,11 @@ class AddressLookupService
   end
 
   def fetch_geolocation
-    @fetch_geolocation ||= begin
-      geolocation = geolocation_service.geocode_by_address(**address.compact)
+    @fetch_geolocation ||= geolocation_service.geocode_by_address(**address.compact)
 
-      return geolocation if geolocation.present?
+    GeoLocationNotFound if @fetch_geolocation.blank?
 
-      raise GeoLocationNotFound
-    end
+    @fetch_geolocation
   end
 
   def response(success:, location:, error: nil)
