@@ -74,4 +74,66 @@ RSpec.describe AddressLookupService, type: :service do
       end
     end
   end
+
+  context 'when geolocation service fails' do
+    let(:params) do
+      {
+        street: 'Avenida Paulista',
+        number: 7,
+        city: 'São Paulo',
+        state: 'São Paulo',
+        country: 'Brazil'
+      }
+    end
+
+    it 'returns an error when geocoder service cannot find address' do
+      allow(geolocation_service).to receive(:geocode_by_address).and_return([])
+
+      response = service.execute
+
+      expect(response.success?).to eq false
+      expect(response.data).to be_empty
+      expect(response.error).to eq "Geocoder not found for address: #{params.values.join(',')}"
+    end
+
+    it 'returns an error when geocoder service exceeds query limit' do
+      allow(geolocation_service).to receive(:geocode_by_address).and_raise(Geocoder::OverQueryLimitError)
+
+      response = service.execute
+
+      expect(response.success?).to eq false
+      expect(response.data).to be_empty
+      expect(response.error).to eq "Over query limit: #{Geocoder::OverQueryLimitError}"
+    end
+
+    it 'returns an error when geocoder request is denied' do
+      allow(geolocation_service).to receive(:geocode_by_address).and_raise(Geocoder::RequestDenied)
+
+      response = service.execute
+
+      expect(response.success?).to eq false
+      expect(response.data).to be_empty
+      expect(response.error).to eq "Request denied: #{Geocoder::RequestDenied}"
+    end
+
+    it 'returns an error when geocoder request is invalid' do
+      allow(geolocation_service).to receive(:geocode_by_address).and_raise(Geocoder::InvalidRequest)
+
+      response = service.execute
+
+      expect(response.success?).to eq false
+      expect(response.data).to be_empty
+      expect(response.error).to eq "Invalid request: #{Geocoder::InvalidRequest}"
+    end
+
+    it 'returns an error when geocoder request time out' do
+      allow(geolocation_service).to receive(:geocode_by_address).and_raise(Timeout::Error)
+
+      response = service.execute
+
+      expect(response.success?).to eq false
+      expect(response.data).to be_empty
+      expect(response.error).to eq "Geocoding request timed out: #{Timeout::Error}"
+    end
+  end
 end

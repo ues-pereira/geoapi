@@ -34,9 +34,17 @@ class AddressLookupService
 
     Result.success(location)
   rescue MissingParams => e
-    Result.failure(e.message)
-  rescue GeoLocationNotFound
-    Result.failure([])
+    Result.failure("Missing required parameters: #{e.message}")
+  rescue GeoLocationNotFound => e
+    Result.failure("Geocoder not found for address: #{e.message}")
+  rescue Geocoder::OverQueryLimitError => e
+    Result.failure("Over query limit: #{e.message}")
+  rescue Geocoder::RequestDenied => e
+    Result.failure("Request denied: #{e.message}")
+  rescue Geocoder::InvalidRequest => e
+    Result.failure("Invalid request: #{e.message}")
+  rescue Timeout::Error => e
+    Result.failure("Geocoding request timed out: #{e.message}")
   end
 
   private
@@ -48,13 +56,13 @@ class AddressLookupService
   def validate_params
     missing_keys = address.except(:number).select { |_, value| value.blank? }
 
-    raise MissingParams, "Missing required parameters: #{missing_keys.keys.join(', ')}" if missing_keys.any?
+    raise MissingParams, "#{missing_keys.keys.join(',')}" if missing_keys.any?
   end
 
   def fetch_geolocation
     @fetch_geolocation ||= geolocation_service.geocode_by_address(**address.compact)
 
-    GeoLocationNotFound if @fetch_geolocation.blank?
+    raise GeoLocationNotFound, "#{address.values.join(',')}" if @fetch_geolocation.blank?
 
     @fetch_geolocation
   end
