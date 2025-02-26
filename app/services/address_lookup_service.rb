@@ -19,10 +19,10 @@ class AddressLookupService
   def execute
     validate_params
 
-    location = repository.find_by_address(**address.compact)
+    location = repository.find_by(Location, address.compact)
     return Result.success(location) if location.present?
 
-    location = repository.create!(
+    location = Location.new(
       street: fetch_geolocation.street,
       number: fetch_geolocation.house_number.to_i,
       city: fetch_geolocation.city,
@@ -31,6 +31,10 @@ class AddressLookupService
       latitude: fetch_geolocation.latitude,
       longitude: fetch_geolocation.longitude
     )
+
+    return Result.failure(location.errors.full_message) if location.invalid?
+
+    repository.save!(location)
 
     Result.success(location)
   rescue MissingParams => e

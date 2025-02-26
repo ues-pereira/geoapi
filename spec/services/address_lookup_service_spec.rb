@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AddressLookupService, type: :service do
-  let(:repository) { Repositories::ActiveRecordLocationRepository }
+  let(:repository) { Repositories::ActiveRecord }
   let(:geolocation_service) { Services::GeocoderService }
   let(:service) { described_class.new(**params.merge(repository: repository, geolocation_service: geolocation_service)) }
 
@@ -70,6 +70,7 @@ RSpec.describe AddressLookupService, type: :service do
           expect(response.success?).to eq true
           expect(response.data).to have_attributes(params)
           expect(response.error).to be_nil
+          expect(response.data.persisted?).to eq true
         end
       end
     end
