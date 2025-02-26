@@ -1,3 +1,3 @@
-class Location < ApplicationController
-  def by_address;  end
+class LocationsController < ApplicationController
+  def address;  end
 end

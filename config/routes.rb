@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :locations, only: [] do
     collection do
-      get :by_address
+      get :address
     end
   end
 
