@@ -18,7 +18,7 @@ group :development, :test do
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
   gem "rspec-rails", "~> 7.0.0"
-  gem "pry-byebug", "~> 3.10", ">= 3.10.1"
+  gem "pry-byebug", "~> 3.11"
 end
 
 group :test do
