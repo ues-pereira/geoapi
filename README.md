@@ -22,8 +22,13 @@ To get started with this project, you can use Docker to set up the application. 
 1. **Build and start the application using Docker Compose:**
 
 ```
-docker compose run --rm app bash
+docker compose run --rm --service-ports app bash
 
+```
+2. **Run the application locally:**
+
+```
+bundle exec rails s -b 0.0.0.0
 ```
 
 ## Running Tests
@@ -40,3 +45,19 @@ bin/setup
 ```
 bundle exec rspec
 ```
+
+## Endpoints
+
+### 1. `GET /locations/address`
+Returns geographic coordinates based on a given address.
+
+#### Query Parameters
+
+| Parameter | Type            | Required | Description                        |
+|-----------|-----------------|----------|------------------------------------|
+| `street`  | string          | Yes      | Street name (e.g., Avenida Paulista) |
+| `number`  | string/integer  | Yes      | Street number                      |
+| `city`    | string          | No       | City name                          |
+| `state`   | string          | Yes      | State or region                    |
+| `country` | string          | Yes      | Country name (e.g., Brazil)        |
+
